@@ -618,7 +618,7 @@ components:
         chatId:
           $ref: '#/components/schemas/ChatId'
         newMarkdown:
-          descriptin: новый текст сообщения
+          description: новый текст сообщения
           type: string
 
     EditChatMessagePublicV1Response:
@@ -703,7 +703,7 @@ components:
         - workspaceId
       properties:
         workspaceId:
-          desctiption: id воркспейса, в котором создается чат
+          description: id воркспейса, в котором создается чат
           type: string
         participants:
           description: id участников чата
