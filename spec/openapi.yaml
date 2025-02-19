@@ -2,7 +2,7 @@ openapi: 3.0.1
 
 info:
   title: YuChat Bot API
-  version: 1.1.1
+  version: 1.1.2
   description: Публичный API для работы с YuChat.
   contact:
     name: Команда YuChat
@@ -267,6 +267,28 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
 
+  /public/v1/file.getDownloadUrl:
+    post:
+      description: получение ссылки для скачивания файла
+      tags:
+        - file
+      operationId: getDownloadUrl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetFileDownloadUrlPublicV1Request'
+        required: true
+      responses:
+        "200":
+          description: ссылка для загрузки файла
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileDownloadUrlPublicV1Response'
+        "401":
+          $ref: '#/components/responses/UnauthorizedError'
+
   /public/v1/bot.getUpdates:
     get:
       description: получение всех событий, адресованных боту (личные сообщения, упоминания в чатах, приглашение в чаты и т. д.)
@@ -360,6 +382,10 @@ components:
           $ref: '#/components/schemas/AccountId'
         markdown:
           type: string
+        fileIds:
+          type: array
+          items:
+            type: string
 
     InviteToChat:
       description: приглашение бота в чат
@@ -914,6 +940,30 @@ components:
         fileId:
           type: string
           description: ID файла
+
+    GetFileDownloadUrlPublicV1Request:
+      description: запрос на получение ссылки для скачивания файла
+      example:
+        fileId: "c56Y0kgi"
+      type: object
+      required:
+        - fileId
+      properties:
+        fileId:
+          type: string
+          description: ID файла
+
+    GetFileDownloadUrlPublicV1Response:
+      description: ссылка для скачивания файла
+      example:
+        url: "https://yuchat.ai/file/upload/679878"
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          description: Ссылка для скачивания файла
 
   responses:
     UnauthorizedError:
