@@ -13,16 +13,8 @@ servers:
   - url: https://yuchat.ai/public/v2
 
 tags:
-  - name: message
-    description: отправка/редактирование/удаление сообщений
-  - name: chat
-    description: создание чатов, просмотр/приглашение участников в чат
-  - name: member
-    description: посмотр участников воркспейса
-  - name: updates
-    description: получение всех событий, адресованных боту
-  - name: file
-    description: получение ссылки для загрузки файлов
+  - name: ping
+    description: Проверка доступа до API
 
 paths:
   /ping:
