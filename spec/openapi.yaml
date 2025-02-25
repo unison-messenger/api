@@ -10,15 +10,16 @@ info:
     email: support@yuchat.ai
 
 servers:
-  - url: https://yuchat.ai/public/v2
+  - url: https://yuchat.ai
 
 tags:
   - name: ping
     description: Проверка доступа до API
 
 paths:
-  /ping:
+  /public/v2/ping:
     get:
+      security: []
       description: Пинг до API
       tags:
         - ping
@@ -32,6 +33,11 @@ paths:
                 type: string
 
 components:
+  schemas:
+    Pong:
+      description: Ответ на пинг, содержащий время сервера
+      type: string
+
   securitySchemes:
     bearerAuth:
       type: http
