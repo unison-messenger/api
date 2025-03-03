@@ -15,13 +15,15 @@ servers:
 tags:
   - name: ping
     description: Проверка доступа до API
+  - name: me
+    description: Управление ботом
 
 paths:
   /public/v2/getMe:
     post:
       description: "Получение сведений о боте, в том числе список рабочих пространств, в которых состоит бот, а также информация о профиле бота"
       tags:
-        - getMe
+        - me
       operationId: getMe
       responses:
         "200":
@@ -50,6 +52,9 @@ components:
     MeInfo:
       type: object
       description: "Сведения о боте, в том числе список рабочих пространств, в которых состоит бот, а также информация о профиле бота"
+      required:
+        - profile
+        - workspaces
       properties:
         profile:
           description: "Профиль бота"
@@ -75,11 +80,11 @@ components:
           type: string
         createdAt:
           description: "Дата и время создания аккаунта"
-          example: "2023-02-26T18:58:36.154Z"
+          example: "2023-02-26T18:58:36.154+03:00"
           type: string
         updatedAt:
           description: "Дата и время последнего изменения аккаунта"
-          example: "2024-02-26T18:58:36.154Z"
+          example: "2024-02-26T18:58:36.154+03:00"
           type: string
         fullName:
           description: "Отображаемое имя"
@@ -124,7 +129,7 @@ components:
       enum:
         - REGULAR
         - BOT
-        - GUEST_ACCOUNT
+        - GUEST
 
     AccountLocation:
       description: "Место нахождения"
