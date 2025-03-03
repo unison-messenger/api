@@ -13,8 +13,6 @@ servers:
   - url: https://yuchat.ai
 
 tags:
-  - name: ping
-    description: Проверка доступа до API
   - name: me
     description: Управление ботом
 
@@ -32,20 +30,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MeInfo'
-  /public/v2/ping:
-    get:
-      security: []
-      description: Пинг до API
-      tags:
-        - ping
-      operationId: ping
-      responses:
-        "200":
-          description: Сообщение с серверным временем
-          content:
-            application/json:
-              schema:
-                type: string
 
 components:
   schemas:
