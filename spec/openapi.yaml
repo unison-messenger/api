@@ -53,6 +53,12 @@ components:
     Profile:
       description: "Информация о профиле участника"
       type: object
+      required:
+        - accountId
+        - createdAt
+        - updatedAt
+        - accountType
+        - accountDetails
       properties:
         accountId:
           description: "Идентификатор аккаунта"
