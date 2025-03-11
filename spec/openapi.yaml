@@ -58,7 +58,6 @@ components:
         - createdAt
         - updatedAt
         - accountType
-        - accountDetails
       properties:
         accountId:
           description: "Идентификатор аккаунта"
