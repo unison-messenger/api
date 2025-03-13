@@ -30,6 +30,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MeInfo'
+        "403":
+          description: Ошибка аутентификации
+        "429":
+          description: Превышен лимит запросов
 
 components:
   schemas:
