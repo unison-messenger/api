@@ -13,30 +13,126 @@ servers:
   - url: https://yuchat.ai
 
 tags:
-  - name: ping
-    description: Проверка доступа до API
+  - name: me
+    description: Управление ботом
 
 paths:
-  /public/v2/ping:
-    get:
-      security: []
-      description: Пинг до API
+  /public/v2/getMe:
+    post:
+      description: "Получение сведений о боте, в том числе список рабочих пространств, в которых состоит бот, а также информация о профиле бота"
       tags:
-        - ping
-      operationId: ping
+        - me
+      operationId: getMe
       responses:
         "200":
-          description: Сообщение с серверным временем
+          description: Сведения о боте
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/MeInfo'
+        "403":
+          description: Ошибка аутентификации
+        "429":
+          description: Превышен лимит запросов
 
 components:
   schemas:
-    Pong:
-      description: Ответ на пинг, содержащий время сервера
+    MeInfo:
+      type: object
+      description: "Сведения о боте, в том числе список рабочих пространств, в которых состоит бот, а также информация о профиле бота"
+      required:
+        - profile
+        - workspaces
+      properties:
+        profile:
+          description: "Профиль бота"
+          $ref: '#/components/schemas/Profile'
+        workspaces:
+          description: "Массив из workspaceId, в которых состоит бот"
+          type: array
+          example: "[ADK5NyCqIK, BDK5NyCqIK]"
+          items:
+            type: string
+
+    Profile:
+      description: "Информация о профиле участника"
+      type: object
+      required:
+        - accountId
+        - createdAt
+        - updatedAt
+        - accountType
+      properties:
+        accountId:
+          description: "Идентификатор аккаунта"
+          example: "AIQffAsGi8"
+          type: string
+        email:
+          description: "Почтовый адрес"
+          example: "i.ivanov@example.ru"
+          type: string
+        createdAt:
+          description: "Дата и время создания аккаунта"
+          example: "2023-02-26T18:58:36.154+03:00"
+          type: string
+        updatedAt:
+          description: "Дата и время последнего изменения аккаунта"
+          example: "2024-02-26T18:58:36.154+03:00"
+          type: string
+        fullName:
+          description: "Отображаемое имя"
+          example: "Иванов Иван Иванович"
+          type: string
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+        accountDetails:
+          $ref: '#/components/schemas/AccountDetails'
+
+    AccountDetails:
+      description: "Дополнительные данные о пользователе"
+      type: object
+      properties:
+        position:
+          description: "Должность"
+          example: "Аналитик"
+          type: string
+        department:
+          description: "Департамент"
+          example: "B2B"
+          type: string
+        phoneNumber:
+          description: "Номер телефона"
+          example: "88001234567"
+          type: string
+        location:
+          $ref: '#/components/schemas/AccountLocation'
+        bio:
+          description: "Краткая информация"
+          example: "Не беспокоить после 20:00"
+          type: string
+        status:
+          example: "В командировке"
+          description: "Статус"
+          type: string
+
+    AccountType:
+      description: "Тип аккаунта"
+      example: "REGULAR"
       type: string
+      enum:
+        - REGULAR
+        - BOT
+        - GUEST
+
+    AccountLocation:
+      description: "Место нахождения"
+      example: "OFFICE"
+      type: string
+      enum:
+        - NOT_SET
+        - OFFICE
+        - HOME
+        - VACATION
 
   securitySchemes:
     bearerAuth:
