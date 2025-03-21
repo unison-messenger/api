@@ -332,13 +332,6 @@ paths:
           schema:
             type: integer
             default: 100
-        - name: timeout
-          in: query
-          description: Таймаут в секундах для ожидания новых событий. По умолчанию 0 (без ожидания).
-          required: false
-          schema:
-            type: integer
-            default: 0
       responses:
         "200":
           description: Список событий, адресованных боту
