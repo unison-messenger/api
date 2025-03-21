@@ -374,8 +374,14 @@ components:
       type: string
       format: flake-id
 
+    MembershipId:
+      description: ID пользователя в конкретном воркспейсе
+      example: "a56Y0kgi"
+      type: string
+      format: flake-id
+
     NewChatMessage:
-      description: Cообщение, которое видит бот
+      description: Сообщение, которое видит бот
       example:
         workspaceId: "w67Y89gu"
         chatId: "c56Y0kgi"
@@ -427,6 +433,28 @@ components:
           $ref: '#/components/schemas/ChatId'
         inviter:
           $ref: '#/components/schemas/AccountId'
+    JoinedToChat:
+      required:
+        - joined
+      type: object
+      properties:
+        inviter:
+          $ref: '#/components/schemas/MembershipId'
+        joined:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipId'
+    LeftFromChat:
+      required:
+        - left
+      type: object
+      properties:
+        kicker:
+          $ref: '#/components/schemas/MembershipId'
+        left:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipId'
 
     WorkspaceChat:
       description: Информация о чате
@@ -592,6 +620,10 @@ components:
           $ref: '#/components/schemas/NewChatMessage'
         inviteToChat:
           $ref: '#/components/schemas/InviteToChat'
+        joinedToChat:
+          $ref: '#/components/schemas/JoinedToChat'
+        leftFromChat:
+          $ref: '#/components/schemas/LeftFromChat'
 
     WorkspaceChatMembership:
       description: Информация о чате и его участниках
