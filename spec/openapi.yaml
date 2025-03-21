@@ -2,7 +2,7 @@ openapi: 3.0.1
 
 info:
   title: YuChat Bot API
-  version: 1.1.2
+  version: 1.1.3
   description: Публичный API для работы с YuChat.
   contact:
     name: Команда YuChat
@@ -14,20 +14,20 @@ servers:
 
 tags:
   - name: message
-    description: отправка/редактирование/удаление сообщений
+    description: Отправка/редактирование/удаление сообщений
   - name: chat
-    description: создание чатов, просмотр/приглашение участников в чат
+    description: Создание чатов, просмотр/приглашение участников в чат
   - name: member
-    description: посмотр участников воркспейса
+    description: Просмотр участников воркспейса
   - name: updates
-    description: получение всех событий, адресованных боту
+    description: Получение всех событий, адресованных боту
   - name: file
-    description: получение ссылки для загрузки файлов
+    description: Получение ссылки для загрузки файлов
 
 paths:
   /public/v1/chat.message.send:
     post:
-      description: отправка сообщения от имени бота
+      description: Отправка сообщения от имени бота
       tags:
         - message
       operationId: sendChatMessage
@@ -39,7 +39,7 @@ paths:
         required: true
       responses:
         "200":
-          description: сообщение успешно отправлено, в теле ответа есть id этого сообщения
+          description: Сообщение успешно отправлено, в теле ответа есть ID этого сообщения
           content:
             application/json:
               schema:
@@ -49,7 +49,7 @@ paths:
 
   /public/v1/chat.message.edit:
     post:
-      description: редактирование сообщения
+      description: Редактирование сообщения
       tags:
         - message
       operationId: editChatMessage
@@ -61,7 +61,7 @@ paths:
         required: true
       responses:
         "200":
-          description: сообщение успешно отредактировано, в теле ответа находится время последнего обновления, id сообщения остается прежним
+          description: Сообщение успешно отредактировано, в теле ответа находится время последнего обновления, ID сообщения остается прежним
           content:
             application/json:
               schema:
@@ -71,7 +71,7 @@ paths:
 
   /public/v1/chat.message.delete:
     post:
-      description: удаление сообщения
+      description: Удаление сообщения
       tags:
         - message
       operationId: deleteChatMessage
@@ -83,7 +83,7 @@ paths:
         required: true
       responses:
         "200":
-          description: сообщение успешно удалено, в теле ответа находится время удаления
+          description: Сообщение успешно удалено, в теле ответа находится время удаления
           content:
             application/json:
               schema:
@@ -93,7 +93,7 @@ paths:
 
   /public/v1/chat.message.forward:
     post:
-      description: пересылка сообщения в другой чат
+      description: Пересылка сообщения в другой чат
       tags:
         - message
       operationId: forwardChatMessage
@@ -105,7 +105,7 @@ paths:
         required: true
       responses:
         "200":
-          description: сообщение успешно переслано, в теле ответа находится id пересланного сообщения
+          description: Сообщение успешно переслано, в теле ответа находится ID пересланного сообщения
           content:
             application/json:
               schema:
@@ -115,7 +115,7 @@ paths:
 
   /public/v1/chat.workspace.create:
     post:
-      description: создание публичного/приватного чата внутри воркспейса
+      description: Создание публичного/приватного чата внутри воркспейса
       tags:
         - chat
       operationId: createWorkspaceChat
@@ -127,7 +127,7 @@ paths:
         required: true
       responses:
         "200":
-          description: чат успешно создан, в теле ответа находится id чата
+          description: Чат успешно создан, в теле ответа находится ID чата
           content:
             application/json:
               schema:
@@ -137,7 +137,7 @@ paths:
 
   /public/v1/chat.personal.create:
     post:
-      description: создание персонального чата (личные сообщения)
+      description: Создание персонального чата (личные сообщения)
       tags:
         - chat
       operationId: createPersonalChat
@@ -149,7 +149,7 @@ paths:
         required: true
       responses:
         "200":
-          description: персональный чат успешно создан, в теле ответа находится id чата
+          description: Персональный чат успешно создан, в теле ответа находится ID чата
           content:
             application/json:
               schema:
@@ -159,7 +159,7 @@ paths:
 
   /public/v1/chat.thread.create:
     post:
-      description: создание треда внутри чата
+      description: Создание обсуждения внутри чата
       tags:
         - chat
       operationId: createThreadChat
@@ -171,7 +171,7 @@ paths:
         required: true
       responses:
         "200":
-          description: тред успешно создан, в теле ответа находится id чата
+          description: Обсуждение успешно создано, в теле ответа находится ID чата
           content:
             application/json:
               schema:
@@ -181,7 +181,7 @@ paths:
 
   /public/v1/chat.workspace.list:
     post:
-      description: получение списка чатов внутри воркспейса
+      description: Получение списка чатов внутри воркспейса
       tags:
         - chat
       operationId: listWorkspaceChats
@@ -193,7 +193,7 @@ paths:
         required: true
       responses:
         "200":
-          description: список чатов
+          description: Список чатов
           content:
             application/json:
               schema:
@@ -203,7 +203,7 @@ paths:
 
   /public/v1/chat.invite:
     post:
-      description: приглашение участников в чат
+      description: Приглашение участников в чат
       tags:
         - chat
       operationId: inviteToChat
@@ -215,7 +215,7 @@ paths:
         required: true
       responses:
         "200":
-          description: участники успешно приглашены, в теле ответа находится информация о чате, в том числе id участников
+          description: Участники успешно приглашены, в теле ответа находится информация о чате, в том числе ID участников
           content:
             application/json:
               schema:
@@ -223,9 +223,31 @@ paths:
         "401":
           $ref: '#/components/responses/UnauthorizedError'
 
+  /public/v1/chat.kick:
+    post:
+      description: Удаление участника из чата
+      tags:
+        - chat
+      operationId: kickFromChat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KickFromChatPublicV1Request'
+        required: true
+      responses:
+        "200":
+          description: Участники успешно удалены, в теле ответа находится информация о чате, в том числе ID оставшихся участников
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KickFromChatPublicV1Response'
+        "401":
+          $ref: '#/components/responses/UnauthorizedError'
+
   /public/v1/member.list:
     post:
-      description: получение списка участников воркспейса
+      description: Получение списка участников воркспейса
       tags:
         - member
       operationId: listMembers
@@ -237,7 +259,7 @@ paths:
         required: true
       responses:
         "200":
-          description: список участников
+          description: Список участников
           content:
             application/json:
               schema:
@@ -247,7 +269,7 @@ paths:
 
   /public/v1/file.getPreSignedUrl:
     post:
-      description: получение ссылки для загрузки файла на сервер
+      description: Получение ссылки для загрузки файла на сервер
       tags:
         - file
       operationId: getPreSignedUrl
@@ -259,7 +281,7 @@ paths:
         required: true
       responses:
         "200":
-          description: ссылка для загрузки файла и id файла
+          description: Ссылка для загрузки файла и ID файла
           content:
             application/json:
               schema:
@@ -269,7 +291,7 @@ paths:
 
   /public/v1/file.getDownloadUrl:
     post:
-      description: получение ссылки для скачивания файла
+      description: Получение ссылки для скачивания файла
       tags:
         - file
       operationId: getDownloadUrl
@@ -281,7 +303,7 @@ paths:
         required: true
       responses:
         "200":
-          description: ссылка для загрузки файла
+          description: Ссылка для загрузки файла
           content:
             application/json:
               schema:
@@ -291,7 +313,7 @@ paths:
 
   /public/v1/bot.getUpdates:
     get:
-      description: получение всех событий, адресованных боту (личные сообщения, упоминания в чатах, приглашение в чаты и т. д.)
+      description: Получение всех событий, адресованных боту (личные сообщения, упоминания в чатах, приглашение в чаты и т. д.)
       operationId: getUpdates
       tags:
         - updates
@@ -305,21 +327,21 @@ paths:
             format: int64
         - name: limit
           in: query
-          description: максимальное количество событий, которое нужно вернуть. По умолчанию 100.
+          description: Максимальное количество событий, которое нужно вернуть. По умолчанию 100.
           required: false
           schema:
             type: integer
             default: 100
         - name: timeout
           in: query
-          description: таймаут в секундах для ожидания новых событий. По умолчанию 0 (без ожидания).
+          description: Таймаут в секундах для ожидания новых событий. По умолчанию 0 (без ожидания).
           required: false
           schema:
             type: integer
             default: 0
       responses:
         "200":
-          description: список событий, адресованных боту
+          description: Список событий, адресованных боту
           content:
             application/json:
               schema:
@@ -329,31 +351,31 @@ paths:
 components:
   schemas:
     WorkspaceId:
-      description: id воркспейса
+      description: ID воркспейса
       example: "w67Y89gu"
       type: string
       format: flake-id
 
     ChatId:
-      description: id чата, уникальный в рамках воркспейса
+      description: ID чата, уникальный в рамках воркспейса
       example: "c56Y0kgi"
       type: string
       format: string-id
 
     ChatMessageId:
-      description: id сообщения, уникальный в рамках воркспейса и чата
+      description: ID сообщения, уникальный в рамках воркспейса и чата
       example: "m56Y0kgi"
       type: string
       format: flake-id
 
     AccountId:
-      description: id аккаунта пользователя
+      description: ID аккаунта пользователя
       example: "a56Y0kgi"
       type: string
       format: flake-id
 
     NewChatMessage:
-      description: сообщение, которое видит бот
+      description: Cообщение, которое видит бот
       example:
         workspaceId: "w67Y89gu"
         chatId: "c56Y0kgi"
@@ -388,7 +410,7 @@ components:
             type: string
 
     InviteToChat:
-      description: приглашение бота в чат
+      description: Приглашение бота в чат
       example:
         workspaceId: "w67Y89gu"
         chatId: "c56Y0kgi"
@@ -407,12 +429,12 @@ components:
           $ref: '#/components/schemas/AccountId'
 
     WorkspaceChat:
-      description: информация о чате
+      description: Информация о чате
       example:
         chatId: "c56Y0kgi"
         membershipIds: [ "a56Y0kgi", "a56Y0kgi" ]
         workspaceId: "w67Y89gu"
-        name: "Флудилка с мемами"
+        name: "Флудилка"
         type: "PUBLIC"
         announceChannel: true
         description: "Общение на любые темы, кроме работы"
@@ -436,7 +458,7 @@ components:
           type: string
 
     WorkspaceChatType:
-      description: тип чата (публичный, приватный, общий, breakout)
+      description: Тип чата (публичный, приватный, общий, breakout)
       example: "PUBLIC"
       type: string
       enum:
@@ -446,7 +468,7 @@ components:
         - BREAKOUT
 
     ChatMemberRoleType:
-      description: роль участника в чате (участник, админ, владелец)
+      description: Роль участника в чате (участник, админ, владелец)
       example: "CHAT_MEMBER"
       type: string
       enum:
@@ -455,7 +477,7 @@ components:
         - CHAT_OWNER
 
     ChatPermission:
-      description: права участника в чате
+      description: Права участника в чате
       example: "RENAME_CHAT"
       type: string
       enum:
@@ -469,7 +491,7 @@ components:
         - SCHEDULE_CONFERENCE
 
     Member:
-      description: информация о участнике воркспейса
+      description: Информация об участнике воркспейса
       type: object
       properties:
         memberId:
@@ -492,7 +514,7 @@ components:
           $ref: '#/components/schemas/MemberStatus'
 
     Profile:
-      description: информация о профиле участника
+      description: Информация о профиле участника
       type: object
       properties:
         profileId:
@@ -507,7 +529,7 @@ components:
           $ref: '#/components/schemas/AccountDetails'
 
     AccountDetails:
-      description: дополнительная информация о пользователе
+      description: Дополнительная информация о пользователе
       type: object
       properties:
         position:
@@ -520,7 +542,7 @@ components:
           $ref: '#/components/schemas/AccountLocation'
 
     AccountLocation:
-      description: статус участника
+      description: Статус участника
       type: string
       enum:
         - LOCATION_NOT_SET
@@ -529,7 +551,7 @@ components:
         - VACATION
 
     MemberRoleType:
-      description: роль участника воркспейса
+      description: Роль участника воркспейса
       type: string
       enum:
         - MEMBER
@@ -539,7 +561,7 @@ components:
         - GUEST_CALLER
 
     MemberStatus:
-      description: статус участника
+      description: Статус аккаунта
       type: string
       enum:
         - PENDING
@@ -547,7 +569,7 @@ components:
         - SUSPENDED
 
     AccountType:
-      description: тип аккаунта
+      description: Тип аккаунта
       example: "REGULAR"
       type: string
       enum:
@@ -558,7 +580,7 @@ components:
         - GUEST_ACCOUNT
 
     Update:
-      description: событие, адресованное боту
+      description: Событие, адресованное боту
       type: object
       required:
         - updateId
@@ -572,26 +594,24 @@ components:
           $ref: '#/components/schemas/InviteToChat'
 
     WorkspaceChatMembership:
-      description: информация о чате и его участниках
+      description: Информация о чате и его участниках
       type: object
       properties:
         chat:
           $ref: '#/components/schemas/WorkspaceChat'
         role:
-          # TODO: description:
           $ref: '#/components/schemas/ChatMemberRoleType'
         permissions:
           type: array
           items:
-            # TODO: description:
             $ref: '#/components/schemas/ChatPermission'
 
     SendChatMessagePublicV1Request:
-      description: отправка сообщения
+      description: Отправка сообщения
       example:
         workspaceId: "w67Y89gu"
         chatId: "c56Y0kgi"
-        markdown: "**Коллеги**, когда фича будет готова?"
+        markdown: "**Коллеги**, когда задача будет готова?"
       type: object
       required:
         - workspaceId
@@ -606,7 +626,7 @@ components:
           description: текст сообщения
           type: string
         fileIds:
-          description: id файлов, прикрепленных к сообщению
+          description: ID файлов, прикрепленных к сообщению
           example: [ "f56Y0kgi", "f56Y0kgi" ]
           type: array
           items:
@@ -624,7 +644,7 @@ components:
           $ref: '#/components/schemas/ChatMessageId'
 
     EditChatMessagePublicV1Request:
-      description: редактирование сообщения
+      description: Редактирование сообщения
       example:
         workspaceId: "w67Y89gu"
         chatId: "c56Y0kgi"
@@ -644,7 +664,7 @@ components:
         chatId:
           $ref: '#/components/schemas/ChatId'
         newMarkdown:
-          description: новый текст сообщения
+          description: Новый текст сообщения
           type: string
 
     EditChatMessagePublicV1Response:
@@ -680,7 +700,7 @@ components:
           format: date-time
 
     ForwardChatMessagePublicV1Request:
-      description: пересылка сообщения
+      description: Пересылка сообщения
       example:
         workspaceId: "w67Y89gu"
         sourceChatId: "c56Y0kgi"
@@ -704,7 +724,7 @@ components:
         targetChatId:
           $ref: '#/components/schemas/ChatId'
         markdown:
-          description: текс сообщения, которое "подписывает" пересылаемое сообщение
+          description: Текст подписи к пересылаемому сообщению
           type: string
 
     ForwardChatMessagePublicV1Response:
@@ -716,28 +736,28 @@ components:
           $ref: '#/components/schemas/ChatMessageId'
 
     CreateWorkspaceChatPublicV1Request:
-      description: запрос на создание публичного/приватного чата внутри воркспейса
+      description: Запрос на создание публичного/приватного чата внутри воркспейса
       example:
         workspaceId: "w67Y89gu"
         participants: [ "a56Y0kgi", "a56Y0kgi" ]
-        name: "Флудилка с мeмами без начальников"
+        name: "Чат B2B"
         type: "PRIVATE"
         announceChannel: false
-        description: "Общение на любые темы, кроме работы (для всех, кроме начальников)"
+        description: "Для обсуждения B2B заказов"
       type: object
       required:
         - workspaceId
       properties:
         workspaceId:
-          description: id воркспейса, в котором создается чат
+          description: ID воркспейса, в котором создается чат
           type: string
         participants:
-          description: id участников чата
+          description: ID участников чата
           type: array
           items:
             type: string
         name:
-          description: название чата
+          description: Название чата
           type: string
         type:
           $ref: '#/components/schemas/WorkspaceChatType'
@@ -756,7 +776,7 @@ components:
           type: string
 
     CreatePersonalChatPublicV1Request:
-      description: запрос на создание персонального чата
+      description: Запрос на создание персонального чата
       example:
         workspaceId: "w67Y89gu"
         participant: "a56Y0kgi"
@@ -766,10 +786,10 @@ components:
         - participant
       properties:
         workspaceId:
-          description: id воркспейса, в котором создается чат
+          description: ID воркспейса, в котором создается чат
           type: string
         participant:
-          description: id участника чата (должен быть участником воркспейса)д
+          description: ID участника чата (должен быть участником воркспейса)
           type: string
 
     CreatePersonalChatPublicV1Response:
@@ -779,7 +799,7 @@ components:
           type: string
 
     CreateThreadChatPublicV1Request:
-      description: запрос на создание треда внутри чата
+      description: Запрос на создание обсуждения внутри чата
       example:
         workspaceId: "w67Y89gu"
         chatId: "c56Y0kgi"
@@ -791,13 +811,13 @@ components:
         - parentMessageId
       properties:
         workspaceId:
-          description: id воркспейса
+          description: ID воркспейса
           type: string
         chatId:
-          description: id чата
+          description: ID чата
           type: string
         parentMessageId:
-          description: id сообщения, в котором ("под которым") создается тред
+          description: ID сообщения, внутри которого создается обсуждение
           type: string
 
     CreateThreadChatPublicV1Response:
@@ -807,22 +827,22 @@ components:
           type: string
 
     ListWorkspaceChatsPublicV1Request:
-      description: запрос на получение списка чатов внутри воркспейса
+      description: Запрос на получение списка чатов внутри воркспейса
       example:
         maxCount: 100
         workspaceId: "w67Y89gu"
       type: object
       properties:
         chatIds:
-          description: id чатов, информацию о которых нужно получить. Если не указан, возвращаются все чаты в воркспейсе
+          description: ID чатов, информацию о которых нужно получить. Если не указан, возвращаются все чаты в воркспейсе
           type: array
           items:
             type: string
         maxCount:
-          description: максимальное количество чатов, которое нужно вернуть. По умолчанию 100  
+          description: Максимальное количество чатов, которое нужно вернуть. По умолчанию 100
           type: integer
         workspaceId:
-          description: id воркспейса
+          description: ID воркспейса
           type: string
 
     ListWorkspaceChatsPublicV1Response:
@@ -834,7 +854,7 @@ components:
             $ref: '#/components/schemas/WorkspaceChatMembership'
 
     InviteToChatPublicV1Request:
-      description: запрос на приглашение участников в чат
+      description: Запрос на приглашение участников в чат
       example:
         chatId: "c56Y0kgi"
         workspaceId: "w67Y89gu"
@@ -846,13 +866,13 @@ components:
         - memberId
       properties:
         chatId:
-          description: id чата
+          description: ID чата
           type: string
         workspaceId:
-          description: id воркспейса
+          description: ID воркспейса
           type: string
         memberId:
-          description: id участников, которых нужно пригласить в чат
+          description: ID участников, которых нужно пригласить в чат
           type: array
           items:
             type: string
@@ -863,8 +883,38 @@ components:
         chat:
           $ref: '#/components/schemas/WorkspaceChat'
 
+    KickFromChatPublicV1Request:
+      description: Запрос на удаление участников из чата
+      example:
+        chatId: "c56Y0kgi"
+        workspaceId: "w67Y89gu"
+        memberId: [ "a56Y0kgi", "a77Y0kgi" ]
+      type: object
+      required:
+        - chatId
+        - workspaceId
+        - memberId
+      properties:
+        chatId:
+          description: ID чата
+          type: string
+        workspaceId:
+          description: ID воркспейса
+          type: string
+        memberId:
+          description: ID участников, которых нужно удалить из чата
+          type: array
+          items:
+            type: string
+
+    KickFromChatPublicV1Response:
+      type: object
+      properties:
+        chat:
+          $ref: '#/components/schemas/WorkspaceChat'
+
     MemberListPublicV1Request:
-      description: запрос на получение списка участников воркспейса
+      description: Запрос на получение списка участников воркспейса
       example:
         workspaceId: "w67Y89gu"
       type: object
@@ -872,7 +922,7 @@ components:
         - workspaceId
       properties:
         workspaceId:
-          description: id воркспейса
+          description: ID воркспейса
           type: string
 
     MemberListPublicV1Response:
@@ -885,7 +935,7 @@ components:
             $ref: '#/components/schemas/Member'
 
     MediaType:
-      description: тип файла
+      description: Тип файла
       example: "IMAGE"
       type: string
       enum:
@@ -899,7 +949,7 @@ components:
         - PPT
 
     GetFilePreSignedUrlPublicV1Request:
-      description: запрос на получение ссылки для загрузки файла
+      description: Запрос на получение ссылки для загрузки файла
       example:
         fileName: "file.txt"
         mediaType: "RAW"
@@ -913,19 +963,19 @@ components:
       properties:
         fileName:
           type: string
-          description: имя файла
+          description: Имя файла
         mediaType:
           $ref: '#/components/schemas/MediaType'
         workspaceId:
           type: string
-          description: id воркспейса
+          description: ID воркспейса
         accessChatId:
           type: string
           nullable: true
-          description: id чата, в котором будет доступ к файлу
+          description: ID чата, в котором будет доступ к файлу
 
     GetFilePreSignedUrlPublicV1Response:
-      description: ссылка для загрузки файла и id файла
+      description: Ссылка для загрузки файла и ID файла
       example:
         url: "https://yuchat.ai/file/upload/679878"
         fileId: "f56Y0kgi"
@@ -942,7 +992,7 @@ components:
           description: ID файла
 
     GetFileDownloadUrlPublicV1Request:
-      description: запрос на получение ссылки для скачивания файла
+      description: Запрос на получение ссылки для скачивания файла
       example:
         fileId: "c56Y0kgi"
       type: object
@@ -954,7 +1004,7 @@ components:
           description: ID файла
 
     GetFileDownloadUrlPublicV1Response:
-      description: ссылка для скачивания файла
+      description: Ссылка для скачивания файла
       example:
         url: "https://yuchat.ai/file/upload/679878"
       type: object
