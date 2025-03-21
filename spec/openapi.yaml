@@ -777,7 +777,7 @@ components:
           description: ID воркспейса, в котором создается чат
           type: string
         participants:
-          description: ID участников чата
+          description: Список MembershipId участников чата
           type: array
           items:
             type: string
@@ -814,7 +814,7 @@ components:
           description: ID воркспейса, в котором создается чат
           type: string
         participant:
-          description: ID участника чата (должен быть участником воркспейса)
+          description: MembershipId участника чата
           type: string
 
     CreatePersonalChatPublicV1Response:
