@@ -428,9 +428,15 @@ components:
           $ref: '#/components/schemas/AccountId'
     JoinedToChat:
       required:
+        - workspaceId
+        - chatId
         - joined
       type: object
       properties:
+        workspaceId:
+          $ref: '#/components/schemas/WorkspaceId'
+        chatId:
+          $ref: '#/components/schemas/ChatId'
         inviter:
           $ref: '#/components/schemas/MembershipId'
         joined:
@@ -439,9 +445,15 @@ components:
             $ref: '#/components/schemas/MembershipId'
     LeftFromChat:
       required:
+        - workspaceId
+        - chatId
         - left
       type: object
       properties:
+        workspaceId:
+          $ref: '#/components/schemas/WorkspaceId'
+        chatId:
+          $ref: '#/components/schemas/ChatId'
         kicker:
           $ref: '#/components/schemas/MembershipId'
         left:
