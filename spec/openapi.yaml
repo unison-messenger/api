@@ -181,10 +181,12 @@ paths:
                   example: "w:AIQffAsGi7"
                   description: "Id чата, из которого пересылается сообщение"
                   type: string
-                sourceMessageId:
-                  example: "dIQffAsGi7"
-                  description: "Id пересылаемого сообщения"
-                  type: string
+                sourceMessageIds:
+                  description: "Id пересылаемых сообщений"
+                  type: array
+                  example: "[ADK5NyCqIK, BDK5NyCqIK]"
+                  items:
+                    type: string
                 targetChatId:
                   example: "w:AIQffAsGi8"
                   description: "Id чата, в который пересылается сообщение"
@@ -196,7 +198,7 @@ paths:
               required:
                 - workspaceId
                 - sourceChatId
-                - sourceMessageId
+                - sourceMessageIds
                 - targetChatId
       responses:
         "200":
