@@ -17,6 +17,287 @@ tags:
     description: Управление ботом
 
 paths:
+  /public/v2/sendMessage:
+    post:
+      description: "Отправка сообщения в чат"
+      tags:
+        - message
+      operationId: sendMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "AIQffAsGi8"
+                  description: "Id рабочего пространства, в котором отправляется сообщение"
+                  type: string
+                chatId:
+                  example: "w:AIQffAsGi8"
+                  description: "Id чата, в который отправляется сообщение"
+                  type: string
+                text:
+                  example: "Привет!"
+                  description: "Сообщение в формате Markdown"
+                  type: string
+                fileIds:
+                  example: "[ADK5NyCqIK, BDK5NyCqIK]"
+                  description: "Массив из Id файлов, которые будут прикреплены к сообщению"
+                  type: array
+                  items:
+                    type: string
+                replyTo:
+                  example: "gIQffAsGi8"
+                  description: "Id сообщения, на который ссылается отправляемое сообщение (ответ на сообщение)"
+                  type: string
+              required:
+                - workspaceId
+                - chatId
+      responses:
+        "200":
+          description: "Сообщение успешно отправлено"
+          content:
+            application/json:
+              schema:
+                properties:
+                  messageId:
+                    example: "gIQffAsGi8"
+                    description: "Id отправленного сообщения"
+                    type: string
+                required:
+                  - messageId
+        "403":
+          description: "Ошибка аутентификации"
+        "429":
+          description: "Превышен лимит запросов"
+
+  /public/v2/editMessage:
+    post:
+      description: "Редактирование сообщения"
+      tags:
+        - message
+      operationId: editMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "gIQffAsGi8"
+                  description: "Id рабочего пространства, в котором редактируется сообщение"
+                  type: string
+                chatId:
+                  example: "w:gIQffAsGi8"
+                  description: "Id чата, в котором редактируется сообщение"
+                  type: string
+                messageId:
+                  example: "gIQffAsGi8"
+                  description: "Id редактируемого сообщения"
+                  type: string
+                text:
+                  example: "Привет!"
+                  description: "Сообщение в формате Markdown"
+                  type: string
+                fileIds:
+                  example: "[ADK5NyCqIK, BDK5NyCqIK]"
+                  description: "Массив из Id файлов, которые будут прикреплены к сообщению"
+                  type: array
+                  items:
+                    type: string
+              required:
+                - workspaceId
+                - chatId
+                - messageId
+      responses:
+        "200":
+          description: "Сообщение отредактировано"
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+        "403":
+          description: "Ошибка аутентификации"
+        "429":
+          description: "Превышен лимит запросов"
+
+  /public/v2/deleteMessages:
+    post:
+      description: "Удаление сообщений"
+      tags:
+        - message
+      operationId: deleteMessages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "gIQffAsGi8"
+                  description: "Id рабочего пространства, в котором удаляются сообщения"
+                  type: string
+                chatId:
+                  example: "fIQffAsGi8"
+                  description: "Id чата, в котором удаляются сообщения"
+                  type: string
+                messageIds:
+                  example: "[ADK5NyCqIK, BDK5NyCqIK]"
+                  description: "Массив из Id удаляемых сообщений"
+                  type: array
+                  items:
+                    type: string
+              required:
+                - workspaceId
+                - chatId
+                - messageIds
+      responses:
+        "200":
+          description: "Информация об удаленных сообщениях"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMessagesResponse'
+        "403":
+          description: "Ошибка аутентификации"
+        "429":
+          description: "Превышен лимит запросов"
+  
+  /public/v2/forwardMessage:
+    post:
+      description: "Переслать сообщение"
+      tags:
+        - message
+      operationId: forwardMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "AIQffAsGi8"
+                  description: "Id рабочего пространства, в которое пересылается сообщение"
+                  type: string
+                sourceChatId:
+                  example: "w:AIQffAsGi7"
+                  description: "Id чата, из которого пересылается сообщение"
+                  type: string
+                sourceMessageIds:
+                  description: "Id пересылаемых сообщений"
+                  type: array
+                  example: "[ADK5NyCqIK, BDK5NyCqIK]"
+                  items:
+                    type: string
+                targetChatId:
+                  example: "w:AIQffAsGi8"
+                  description: "Id чата, в который пересылается сообщение"
+                  type: string
+                text:
+                  example: "Посмотри на это"
+                  description: "Подпись к пересылаемому сообщению в формате Markdown"
+                  type: string
+              required:
+                - workspaceId
+                - sourceChatId
+                - sourceMessageIds
+                - targetChatId
+      responses:
+        "200":
+          description: "Сообщение успешно переслано"
+          content:
+            application/json:
+              schema:
+                properties:
+                  messageId:
+                    example: "gIQffAsGi8"
+                    description: "Id пересланного сообщения"
+                    type: string
+                required:
+                  - messageId
+        "403":
+          description: "Ошибка аутентификации"
+        "429":
+          description: "Превышен лимит запросов"
+
+  /public/v2/pinMessage:
+    post:
+      description: "Закрепление сообщения в чате"
+      tags:
+        - message
+      operationId: pinMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "AIQffAsGi8"
+                  description: "Id рабочего пространства, в котором закрепляется сообщение"
+                  type: string
+                chatId:
+                  example: "w:AIQffAsGi8"
+                  description: "Id чата, в котором закрепляется сообщение"
+                  type: string
+                messageId:
+                  example: "dIQffAsGi7"
+                  description: "Id закрепляемого сообщения"
+                  type: string
+              required:
+                - workspaceId
+                - chatId
+                - messageId
+      responses:
+        "200":
+          description: "Сообщение закреплено"
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+        "403":
+          description: "Ошибка аутентификации"
+        "429":
+          description: "Превышен лимит запросов"
+
+  /public/v2/unpinMessage:
+    post:
+      description: "Открепление сообщения в чате"
+      tags:
+        - message
+      operationId: unpinMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "AIQffAsGi8"
+                  description: "Id рабочего пространства, в котором открепляется сообщение"
+                  type: string
+                chatId:
+                  example: "w:AIQffAsGi8"
+                  description: "Id чата, в котором открепляется сообщение"
+                  type: string
+                messageId:
+                  example: "dIQffAsGi7"
+                  description: "Id открепляемого сообщения"
+                  type: string
+              required:
+                - workspaceId
+                - chatId
+                - messageId
+      responses:
+        "200":
+          description: "Сообщение откреплено"
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+        "403":
+          description: "Ошибка аутентификации"
+        "429":
+          description: "Превышен лимит запросов"
+
   /public/v2/getMe:
     post:
       description: "Получение сведений о боте, в том числе список рабочих пространств, в которых состоит бот, а также информация о профиле бота"
@@ -25,18 +306,37 @@ paths:
       operationId: getMe
       responses:
         "200":
-          description: Сведения о боте
+          description: "Сведения о боте"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MeInfo'
         "403":
-          description: Ошибка аутентификации
+          description: "Ошибка аутентификации"
         "429":
-          description: Превышен лимит запросов
+          description: "Превышен лимит запросов"
 
 components:
   schemas:
+    DeleteMessagesResponse:
+      type: object
+      description: "Информация об удаленных сообщениях"
+      required:
+        - updatedAt
+        - deletedMessageIds
+      properties:
+        updatedAt:
+          description: "Время удаления сообщений"
+          type: string
+          format: date-time
+          example: "2024-07-21T17:32:28Z"
+        deletedMessageIds:
+          description: "Массив из messageId, которые были удалены"
+          type: array
+          example: "[ADK5NyCqIK, BDK5NyCqIK]"
+          items:
+            type: string
+
     MeInfo:
       type: object
       description: "Сведения о боте, в том числе список рабочих пространств, в которых состоит бот, а также информация о профиле бота"
