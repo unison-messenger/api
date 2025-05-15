@@ -499,8 +499,10 @@ components:
         - workspaceId
         - chatId
         - messageId
-        - type
-        - created_at
+        - messageType
+        - membershipId
+        - createdAt
+        - updatedAt
         - content
       properties:
         workspaceId:
@@ -523,7 +525,7 @@ components:
           type: string
         membershipId:
           example: "пIQffAsGi8"
-          description: "Id автора сообщения, если оно не системное"
+          description: "Id автора сообщения"
           type: string
         createdAt:
           description: "Дата и время создания сообщения"
@@ -539,7 +541,7 @@ components:
           description: "Массив из реакций к сообщению"
           type: array
           items:
-            $ref: '#/components/schemas/MessageContent'
+            $ref: '#/components/schemas/Reaction'
         threadId:
           example: "t:AIQffAsGi8"
           description: "Id обсуждения под этим сообщением"
@@ -597,7 +599,6 @@ components:
           description: "Системное сообщение создания чата"
           required:
             - creatorMembershipId
-            - membershipIds
           properties:
             creatorMembershipId:
               example: "ADK5NyCqIK"
@@ -623,7 +624,6 @@ components:
           type: object
           description: "Системное сообщение присоединения новых участников к чату"
           required:
-            - inviterMembershipId
             - membershipIds
           properties:
             inviterMembershipId:
@@ -640,7 +640,6 @@ components:
           type: object
           description: "Системное сообщение исключения участников из чата"
           required:
-            - kickerMembershipId
             - membershipIds
           properties:
             kickerMembershipId:
