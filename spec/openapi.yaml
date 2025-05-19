@@ -685,7 +685,7 @@ components:
           description: "Id чата, из которого пересылаются сообщение"
           type: string
         forwardedMessages:
-          description: "Массив пересылаемых сообщений"
+          description: "Массив пересылаемых сообщений. В сообщениях не будет информации о реакциях, обсуждениях, закреплении и о том, является ли сообщение ответом на другое сообщение"
           type: array
           items:
             $ref: '#/components/schemas/Message'
