@@ -46,6 +46,9 @@ paths:
                   type: array
                   items:
                     type: string
+                buttonBar:
+                  description: "Блок кнопок"
+                  $ref: '#/components/schemas/ButtonBar'
                 replyTo:
                   example: "gIQffAsGi8"
                   description: "Id сообщения, на который ссылается отправляемое сообщение (ответ на сообщение)"
@@ -413,6 +416,51 @@ components:
         status:
           example: "В командировке"
           description: "Статус"
+          type: string
+
+    ButtonBar:
+      description: "Блок кнопок"
+      type: object
+      required:
+        - buttonGroups
+      properties:
+        buttonGroups:
+          description: "Ряд кнопок"
+          type: array
+          items:
+            $ref: '#/components/schemas/ButtonGroup'
+
+    ButtonGroup:
+      description: "Ряд кнопок"
+      type: object
+      required:
+        - buttons
+      properties:
+        buttons:
+          description: "Кнопки"
+          type: array
+          items:
+            $ref: '#/components/schemas/Button'
+
+    Button:
+      description: "Кнопка"
+      type: object
+      properties:
+        commandButton:
+          $ref: '#/components/schemas/CommandButton'
+
+    CommandButton:
+      description: "Кнопка с командой"
+      type: object
+      required:
+        - displayText
+        - commandKey
+      properties:
+        displayText:
+          description: "Текст на кнопке"
+          type: string
+        commandKey:
+          description: "Команда, пересылаемая при нажатии на кнопку"
           type: string
 
     AccountType:
