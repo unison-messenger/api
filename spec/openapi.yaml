@@ -654,7 +654,7 @@ components:
                 type: string
         chatRenamed:
           type: object
-          description: "Системное сообщение исключения участников из чата"
+          description: "Системное сообщение переименования чата"
           required:
             - initiatorMembershipId
             - newName
