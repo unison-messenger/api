@@ -17,6 +17,52 @@ tags:
     description: Управление ботом
 
 paths:
+  /public/v2/getMessages:
+    post:
+      description: "Получение списка сообщений из чата"
+      tags:
+        - message
+      operationId: getMessages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "AIQffAsGi8"
+                  description: "Id рабочего пространства, в котором отправляется сообщение"
+                  type: string
+                chatId:
+                  example: "w:AIQffAsGi8"
+                  description: "Id чата, в который отправляется сообщение"
+                  type: string
+                pageSize:
+                  example: "25"
+                  description: "Количество возвращаемых сообщений. Допустимый диапазон от 1 до 100. По умолчанию 20"
+                  type: integer
+                anchorMessageId:
+                  example: "ADK5NyCqIK"
+                  description: "Id сообщения, перед/после которого будет выполнен поиск сообщений. Если не указан - возвращаются последние сообщения в чате"
+                  type: string
+                getBefore:
+                  example: "true"
+                  default: true
+                  description: "Направление поиска сообщений, если указан anchorMessageId. По умолчанию - true, то есть будут возвращены сообщения, отправленные перед anchorMessageId"
+                  type: boolean
+              required:
+                - workspaceId
+                - chatId
+      responses:
+        "200":
+          description: "Список сообщений"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessagesResponse'
+        "403":
+          description: "Ошибка аутентификации"
+        "429":
+          description: "Превышен лимит запросов"
   /public/v2/sendMessage:
     post:
       description: "Отправка сообщения в чат"
@@ -318,6 +364,18 @@ paths:
 
 components:
   schemas:
+    GetMessagesResponse:
+      type: object
+      description: "Данные о запрошенном списке сообщений"
+      required:
+        - messages
+      properties:
+        messages:
+          description: "Массив из объектов Message"
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+
     DeleteMessagesResponse:
       type: object
       description: "Информация об удаленных сообщениях"
@@ -433,6 +491,212 @@ components:
         - OFFICE
         - HOME
         - VACATION
+
+    Message:
+      type: object
+      description: "Объект сообщения"
+      required:
+        - workspaceId
+        - chatId
+        - messageId
+        - messageType
+        - membershipId
+        - createdAt
+        - updatedAt
+        - content
+      properties:
+        workspaceId:
+          example: "AIQffAsGi8"
+          description: "Id рабочего пространства, в котором было отправлено сообщение"
+          type: string
+        chatId:
+          example: "w:AIQffAsGi8"
+          description: "Id чата, в который отправлено сообщение"
+          type: string
+        messageId:
+          example: "пIQffAsGi8"
+          description: "Id сообщения"
+          type: string
+        messageType:
+          $ref: '#/components/schemas/MessageType'
+        inReplyToMessageId:
+          example: "пIQffAsGi8"
+          description: "Id сообщения, на которое было отвечено этим сообщением"
+          type: string
+        membershipId:
+          example: "пIQffAsGi8"
+          description: "Id автора сообщения"
+          type: string
+        createdAt:
+          description: "Дата и время создания сообщения"
+          example: "2023-02-26T18:58:36.154+03:00"
+          type: string
+        updatedAt:
+          description: "Дата и время последнего изменения сообщения"
+          example: "2024-02-26T18:58:36.154+03:00"
+          type: string
+        content:
+          $ref: '#/components/schemas/MessageContent'
+        reactions:
+          description: "Массив из реакций к сообщению"
+          type: array
+          items:
+            $ref: '#/components/schemas/Reaction'
+        threadId:
+          example: "t:AIQffAsGi8"
+          description: "Id обсуждения под этим сообщением"
+          type: string
+        pinnedAt:
+          description: "Дата и время закрепления сообщения"
+          example: "2024-02-26T18:58:36.154+03:00"
+          type: string
+
+    Reaction:
+      type: object
+      description: "Содержимое реакции на сообщение"
+      required:
+        - emoji
+        - count
+      properties:
+        emoji:
+          description: "Emoji в виде :+1:"
+          example: ":heart:"
+          type: string
+        count:
+          description: "Количество реакций"
+          example: "5"
+          type: integer
+
+    MessageContent:
+      type: object
+      description: "Содержимое сообщения. Как минимум одно поле не пустое"
+      properties:
+        text:
+          example: "Привет!"
+          description: "Сообщение в формате Markdown"
+          type: string
+        fileIds:
+          example: "[ADK5NyCqIK, BDK5NyCqIK]"
+          description: "Массив из Id файлов, которые прикреплены к сообщению"
+          type: array
+          items:
+            type: string
+        conferenceId:
+          example: "пIQffAsGi8"
+          description: "Id конференции"
+          type: string
+        systemEvent:
+          $ref: '#/components/schemas/SystemEvent'
+        forwardedContent:
+          $ref: '#/components/schemas/ForwardedContent'
+
+    SystemEvent:
+      type: object
+      description: "Содержимое системного сообщения. Как минимум одно поле не пустое"
+      properties:
+        chatCreated:
+          type: object
+          description: "Системное сообщение создания чата"
+          required:
+            - creatorMembershipId
+          properties:
+            creatorMembershipId:
+              example: "ADK5NyCqIK"
+              description: "Membership Id создателя чата"
+              type: string
+            membershipIds:
+              example: "[ADK5NyCqIK, BDK5NyCqIK]"
+              description: "Массив из Membership Id участников созданного чата"
+              type: array
+              items:
+                type: string
+        chatConvertedToPrivate:
+          type: object
+          description: "Системное сообщение создания чата"
+          required:
+            - initiatorMembershipId
+          properties:
+            initiatorMembershipId:
+              example: "ADK5NyCqIK"
+              description: "Membership Id инициатора конвертации чата в приватный"
+              type: string
+        membersJoined:
+          type: object
+          description: "Системное сообщение присоединения новых участников к чату"
+          required:
+            - membershipIds
+          properties:
+            inviterMembershipId:
+              example: "ADK5NyCqIK"
+              description: "Membership Id участника, который пригласил новых участников"
+              type: string
+            membershipIds:
+              example: "[ADK5NyCqIK, BDK5NyCqIK]"
+              description: "Массив из Membership Id приглашенных участников"
+              type: array
+              items:
+                type: string
+        membersLeft:
+          type: object
+          description: "Системное сообщение исключения участников из чата"
+          required:
+            - membershipIds
+          properties:
+            kickerMembershipId:
+              example: "ADK5NyCqIK"
+              description: "Membership Id участника, который исключил участников"
+              type: string
+            membershipIds:
+              example: "[ADK5NyCqIK, BDK5NyCqIK]"
+              description: "Массив из Membership Id исключенных участников"
+              type: array
+              items:
+                type: string
+        chatRenamed:
+          type: object
+          description: "Системное сообщение переименования чата"
+          required:
+            - initiatorMembershipId
+            - newName
+          properties:
+            initiatorMembershipId:
+              example: "ADK5NyCqIK"
+              description: "Membership Id участника, который переименовал чат"
+              type: string
+            newName:
+              example: "Документация"
+              description: "Новое название чата"
+              type: string
+
+    ForwardedContent:
+      type: object
+      description: "Содержимое пересланного сообщения"
+      required:
+        - sourceWorkspaceId
+        - sourceChatId
+        - forwardedMessages
+      properties:
+        sourceWorkspaceId:
+          example: "AIQffAsGi8"
+          description: "Id рабочего пространства, из которого пересылаются сообщение"
+          type: string
+        sourceChatId:
+          example: "w:AIQffAsGi8"
+          description: "Id чата, из которого пересылаются сообщение"
+          type: string
+        forwardedMessages:
+          description: "Массив пересылаемых сообщений. В сообщениях не будет информации о реакциях, обсуждениях, закреплении и о том, является ли сообщение ответом на другое сообщение"
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+
+    MessageType:
+      description: "Тип сообщения - от пользователя либо системное"
+      example: "USER"
+      type: string
+      enum:
+        - USER
+        - SYSTEM
 
   securitySchemes:
     bearerAuth:
