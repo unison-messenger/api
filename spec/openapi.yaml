@@ -670,7 +670,7 @@ components:
 
     ForwardedContent:
       type: object
-      description: "Содержимое реакции на сообщение"
+      description: "Содержимое пересланного сообщения"
       required:
         - sourceWorkspaceId
         - sourceChatId
