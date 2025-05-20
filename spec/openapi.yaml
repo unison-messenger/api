@@ -107,6 +107,9 @@ paths:
                   type: array
                   items:
                     type: string
+                buttonBar:
+                  description: "Блок кнопок"
+                  $ref: '#/components/schemas/ButtonBar'
               required:
                 - workspaceId
                 - chatId
@@ -457,9 +460,11 @@ components:
         - commandKey
       properties:
         displayText:
+          example: "Нажмите на кнопку"
           description: "Текст на кнопке"
           type: string
         commandKey:
+          example: "/button_pushed"
           description: "Команда, пересылаемая при нажатии на кнопку"
           type: string
 
