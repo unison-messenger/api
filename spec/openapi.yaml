@@ -21,6 +21,8 @@ tags:
     description: Просмотр участников воркспейса
   - name: updates
     description: Получение всех событий, адресованных боту
+  - name: webhook
+    description: Создание, просмотр, удаление вебхуков
   - name: file
     description: Получение ссылки для загрузки файлов
 
@@ -341,6 +343,70 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Update'
+  /public/v1/bot.setWebhook:
+    post:
+      operationId: setWebhook
+      tags:
+        - webhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetWebhookPublicV1Request'
+      responses:
+        "200":
+          description: setWebhook 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetWebhookPublicV1Response'
+  /public/v1/bot.deleteWebhook:
+    delete:
+      operationId: deleteWebhook
+      tags:
+        - webhook
+      parameters:
+        - name: id
+          in: query
+          description: Идентификатор вебхука
+          required: true
+          schema:
+            $ref: '#/components/schemas/WebhookId'
+      responses:
+        "200":
+          description: deleteWebhook 200 response
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
+  /public/v1/bot.getWebhookInfo:
+    get:
+      operationId: getWebhookInfo
+      tags:
+        - webhook
+      parameters:
+        - name: id
+          in: query
+          description: Идентификатор вебхука
+          required: true
+          schema:
+            $ref: '#/components/schemas/WebhookId'
+      responses:
+        "200":
+          description: getWebhookInfo 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWebhookInfoPublicV1Response'
+        "404":
+          description: getWebhookInfo 404 response
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
 components:
   schemas:
     WorkspaceId:
@@ -372,6 +438,11 @@ components:
       example: "a56Y0kgi"
       type: string
       format: flake-id
+
+    WebhookId:
+      description: ID вебхука
+      example: "a56Y0kgi"
+      type: string
 
     NewChatMessage:
       description: Сообщение, которое видит бот
@@ -629,6 +700,39 @@ components:
           $ref: '#/components/schemas/JoinedToChat'
         leftFromChat:
           $ref: '#/components/schemas/LeftFromChat'
+
+    UpdateType:
+      description: Тип обновления
+      example: "MESSAGE"
+      type: string
+      enum:
+        - MESSAGE
+        - CHAT_MEMBER
+
+    WebhookInfo:
+      type: object
+      required:
+        - id
+        - url
+        - hasCustomCertificate
+      properties:
+        id:
+          $ref: '#/components/schemas/WebhookId'
+        url:
+          type: string
+        hasCustomCertificate:
+          type: boolean
+        pendingUpdateCount:
+          type: integer
+        lastErrorDate:
+          type: string
+          format: date-time
+        lastErrorMessage:
+          type: string
+        updateTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateType'
 
     WorkspaceChatMembership:
       description: Информация о чате и его участниках
@@ -1051,6 +1155,39 @@ components:
         url:
           type: string
           description: Ссылка для скачивания файла
+
+    SetWebhookPublicV1Request:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+        certificate:
+          type: string
+          format: byte
+        updateTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateType'
+        secretToken:
+          type: string
+
+    SetWebhookPublicV1Response:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          $ref: '#/components/schemas/WebhookId'
+
+    GetWebhookInfoPublicV1Response:
+      type: object
+      required:
+        - webhookInfo
+      properties:
+        webhookInfo:
+          $ref: '#/components/schemas/WebhookInfo'
 
   responses:
     UnauthorizedError:
