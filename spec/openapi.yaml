@@ -1144,7 +1144,6 @@ components:
           type: string
         certificate:
           type: string
-          format: byte
         updateTypes:
           type: array
           items:
