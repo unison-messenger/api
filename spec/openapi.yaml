@@ -360,19 +360,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SetWebhookPublicV1Response'
+                type: object
+                nullable: true
   /public/v1/bot.deleteWebhook:
     delete:
       operationId: deleteWebhook
       tags:
         - webhook
-      parameters:
-        - name: id
-          in: query
-          description: Идентификатор вебхука
-          required: true
-          schema:
-            $ref: '#/components/schemas/WebhookId'
       responses:
         "200":
           description: deleteWebhook 200 response
@@ -386,13 +380,6 @@ paths:
       operationId: getWebhookInfo
       tags:
         - webhook
-      parameters:
-        - name: id
-          in: query
-          description: Идентификатор вебхука
-          required: true
-          schema:
-            $ref: '#/components/schemas/WebhookId'
       responses:
         "200":
           description: getWebhookInfo 200 response
@@ -438,11 +425,6 @@ components:
       example: "a56Y0kgi"
       type: string
       format: flake-id
-
-    WebhookId:
-      description: ID вебхука
-      example: "a56Y0kgi"
-      type: string
 
     NewChatMessage:
       description: Сообщение, которое видит бот
@@ -712,12 +694,9 @@ components:
     WebhookInfo:
       type: object
       required:
-        - id
         - url
         - hasCustomCertificate
       properties:
-        id:
-          $ref: '#/components/schemas/WebhookId'
         url:
           type: string
         hasCustomCertificate:
@@ -1172,14 +1151,6 @@ components:
             $ref: '#/components/schemas/UpdateType'
         secretToken:
           type: string
-
-    SetWebhookPublicV1Response:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          $ref: '#/components/schemas/WebhookId'
 
     GetWebhookInfoPublicV1Response:
       type: object
