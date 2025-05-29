@@ -440,6 +440,7 @@ components:
         - messageId
         - markdown
         - author
+        - createdAt
       type: object
       properties:
         workspaceId:
@@ -460,6 +461,10 @@ components:
           type: array
           items:
             type: string
+        createdAt:
+          description: "Дата и время отправки сообщения"
+          example: "2023-02-26T18:58:36.154+03:00"
+          type: date-time
 
     InviteToChat:
       description: Приглашение бота в чат
