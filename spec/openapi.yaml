@@ -506,6 +506,13 @@ components:
     Button:
       description: "Кнопка"
       type: object
+      required:
+        - displayText
+      properties:
+        displayText:
+          example: "Нажмите на кнопку"
+          description: "Текст на кнопке"
+          type: string
       discriminator:
         propertyName: type
         mapping:
@@ -518,13 +525,8 @@ components:
         - $ref: '#/components/schemas/Button'
         - type: object
           required:
-            - displayText
             - commandKey
           properties:
-            displayText:
-              example: "Нажмите на кнопку"
-              description: "Текст на кнопке"
-              type: string
             commandKey:
               example: "/button_pushed"
               description: "Команда, пересылаемая при нажатии на кнопку"
@@ -536,13 +538,8 @@ components:
         - $ref: '#/components/schemas/Button'
         - type: object
           required:
-            - displayText
             - link
           properties:
-            displayText:
-              example: "Нажмите на кнопку"
-              description: "Текст на кнопке"
-              type: string
             link:
               example: "https://www.yuchat.ai/"
               description: "Ссылуа, открываемая при нажатии на кнопку"
