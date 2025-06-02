@@ -504,46 +504,44 @@ components:
             $ref: '#/components/schemas/Button'
 
     Button:
-      description: "Кнопка"
+      description: "Кнопка. Заполняется одно из полей в зависимости от типа кнопки."
+      type: object
+      properties:
+        commandButton:
+          $ref: '#/components/schemas/CommandButton'
+        linkButton:
+          $ref: '#/components/schemas/LinkButton'
+
+    CommandButton:
+      description: "Кнопка с командой"
       type: object
       required:
         - displayText
+        - commandKey
       properties:
         displayText:
           example: "Нажмите на кнопку"
           description: "Текст на кнопке"
           type: string
-      discriminator:
-        propertyName: type
-        mapping:
-          command: '#/components/schemas/CommandButton'
-          link: '#/components/schemas/LinkButton'
-
-    CommandButton:
-      description: "Кнопка с командой"
-      allOf:
-        - $ref: '#/components/schemas/Button'
-        - type: object
-          required:
-            - commandKey
-          properties:
-            commandKey:
-              example: "/button_pushed"
-              description: "Команда, пересылаемая при нажатии на кнопку"
-              type: string
+        commandKey:
+          example: "/button_pushed"
+          description: "Команда, пересылаемая при нажатии на кнопку"
+          type: string
 
     LinkButton:
-      description: "Кнопка со ссылкой"
-      allOf:
-        - $ref: '#/components/schemas/Button'
-        - type: object
-          required:
-            - link
-          properties:
-            link:
-              example: "https://www.yuchat.ai/"
-              description: "Ссылуа, открываемая при нажатии на кнопку"
-              type: string
+      type: object
+      required:
+        - displayText
+        - link
+      properties:
+        displayText:
+          example: "Нажмите на кнопку"
+          description: "Текст на кнопке"
+          type: string
+        link:
+          example: "https://www.yuchat.ai/"
+          description: "Ссылка, открываемая при нажатии на кнопку"
+          type: string
 
     AccountType:
       description: "Тип аккаунта"
