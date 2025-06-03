@@ -504,11 +504,13 @@ components:
             $ref: '#/components/schemas/Button'
 
     Button:
-      description: "Кнопка"
+      description: "Кнопка. Заполняется одно из полей в зависимости от типа кнопки."
       type: object
       properties:
         commandButton:
           $ref: '#/components/schemas/CommandButton'
+        linkButton:
+          $ref: '#/components/schemas/LinkButton'
 
     CommandButton:
       description: "Кнопка с командой"
@@ -524,6 +526,21 @@ components:
         commandKey:
           example: "/button_pushed"
           description: "Команда, пересылаемая при нажатии на кнопку"
+          type: string
+
+    LinkButton:
+      type: object
+      required:
+        - displayText
+        - link
+      properties:
+        displayText:
+          example: "Нажмите на кнопку"
+          description: "Текст на кнопке"
+          type: string
+        link:
+          example: "https://www.yuchat.ai/"
+          description: "Ссылка, открываемая при нажатии на кнопку"
           type: string
 
     AccountType:
