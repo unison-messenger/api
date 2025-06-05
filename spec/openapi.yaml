@@ -310,6 +310,58 @@ paths:
         "429":
           description: "Превышен лимит запросов"
 
+  /public/v2/toggleReaction:
+    post:
+      description: "Отправка реакции на сообщение или удаление реакции, если она была поставлена до этого"
+      tags:
+        - message
+      operationId: toggleReaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                workspaceId:
+                  example: "AIQffAsGi8"
+                  description: "Id рабочего пространства, в котором находится сообщение"
+                  type: string
+                chatId:
+                  example: "w:AIQffAsGi8"
+                  description: "Id чата, в котором находится сообщение"
+                  type: string
+                messageId:
+                  example: "dIQffAsGi7"
+                  description: "Id сообщения"
+                  type: string
+                emoji:
+                  description: "Emoji в виде :+1:"
+                  example: ":heart:"
+                  type: string
+              required:
+                - workspaceId
+                - chatId
+                - messageId
+                - emoji
+      responses:
+        "200":
+          description: "Реакция успешно поставлена или убрана"
+          content:
+            application/json:
+              schema:
+                properties:
+                  reactionAdded:
+                    example: "true"
+                    description: "True если реакция поставлена, false - если убрана"
+                    type: boolean
+                required:
+                  - wasAdded
+        "403":
+          description: "Ошибка аутентификации или чат заархивирован"
+        "404":
+          description: "Сообщение не найдено"
+        "429":
+          description: "Превышен лимит запросов"
+
   /public/v2/unpinMessage:
     post:
       description: "Открепление сообщения в чате"
